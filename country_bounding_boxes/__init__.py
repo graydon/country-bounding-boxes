@@ -11587,13 +11587,13 @@ _iso_3_cache = {}
 
 
 def get_countries_containing_point(lon, lat):
-        res = []
-        for c in countries:
-            (lon1, lat1, lon2, lat2) = c.bbox
-            if lon1 <= lon and lon <= lon2 and \
-               lat1 <= lat and lat <= lat2:
-                res.append(c)
-        return res
+    res = []
+    for c in countries:
+        (lon1, lat1, lon2, lat2) = c.bbox
+        if lon1 <= lon and lon <= lon2 and \
+           lat1 <= lat and lat <= lat2:
+            res.append(c)
+    return res
 
 
 def get_country_by_iso_code(code):
