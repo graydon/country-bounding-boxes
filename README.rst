@@ -50,4 +50,4 @@ If you want to do development on the library, follow these steps:
 
 * Create a virtualenv
 * bin/pip install -r requirements/tests.txt
-* bin/nosetests -s mobile_codes
+* bin/nosetests -s country_bounding_boxes
