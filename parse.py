@@ -5,7 +5,7 @@ import shapefile
 import urllib2
 from zipfile import ZipFile
 
-fn = 'ne_110m_admin_0_countries.zip'
+fn = 'ne_50m_admin_0_map_subunits.zip'
 
 # Yes, this URL is as weird as it looks. They put the protocol and
 # hostname in there twice. Maybe it's a bug and they're going to
@@ -13,7 +13,7 @@ fn = 'ne_110m_admin_0_countries.zip'
 
 
 url = ('http://www.naturalearthdata.com/' +
-       'http//www.naturalearthdata.com/download/110m/cultural/' + fn)
+       'http//www.naturalearthdata.com/download/50m/cultural/' + fn)
 
 
 def download_shapefile():
