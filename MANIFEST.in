@@ -1,2 +1,5 @@
 include LICENSE.txt
 include README.rst
+include parse.py
+include requirements/tests.txt
+include requirements/requirements.txt
