@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='country-bounding-boxes',
-    version='0.2.0',
+    version='0.2.1',
     description='Library of bounding boxes of countries (and associated data)',
     long_description=open('README.rst').read(),
     author='Graydon Hoare',
@@ -11,6 +11,7 @@ setup(
     url='https://github.com/graydon/country-bounding-boxes',
     include_package_data=True,
     packages=['country_bounding_boxes'],
+    install_requires=['iso3166'],
     classifiers=[
         'Intended Audience :: Developers',
         'Natural Language :: English',
