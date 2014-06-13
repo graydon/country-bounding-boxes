@@ -43,6 +43,9 @@ class TestCountries(TestCase):
         self.assertEqual(code_to_names(None), [])
         self.assertEqual(code_to_names(1.2), [])
 
+    def test_codes_unicode(self):
+        self.assertEqual(code_to_names(u'TM'), ['Turkmenistan'])
+
     def test_point(self):
         cs = point_to_names(lon=27.5125, lat=-21.173611)
         self.assertEqual(cs, ['Botswana', 'Zimbabwe'])
