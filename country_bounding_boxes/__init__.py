@@ -173,3 +173,130 @@ def show_all_bounding_boxes():
               features=fs)
 
     print json.dumps(fc, indent=True)
+
+
+# Discrepancies / missing units from the naturalearth data set
+def adjust_countries():
+
+    # Adjust Madeira bounding box to include to the island of Porto Santo
+    # by adding 1 degree to edges.
+    for (i, c) in enumerate(countries):
+        if c.gu_a3 == "PMD":
+            (x1, y1, x2, y2) = c.bbox
+            countries[i] = c._replace(bbox=(x1 - 1, y1 - 1, x2 + 1, y2 + 2))
+            break
+
+    # Add a subunit to Italy for the Pelagie Islands based on Pantelleria
+    # (an adjacent island with similar relationship to the Italian
+    # mainland). The Pelagie Islands are administered by the province of
+    # Agrigento (AG).
+    for c in countries:
+        if c.subunit == "Pantelleria":
+            n = c._replace(bbox=(12.315, 35.487, 12.893, 35.885),
+                           subunit="Pelagie Islands",
+                           name="Pelagie Islands",
+                           name_long="Pelagie Islands",
+                           brk_name="Pelagie Islands",
+                           su_a3="IAG",
+                           brk_a3="IAG",
+                           Abbrev="Pel.",
+                           postal="",   # No idea what to put for 'postal'
+                           pop_est=6066.0,
+                           gdp_md_est=-99.0,
+                           lastcensus=2004,
+                           name_len=15.0,
+                           long_len=15.0,
+                           abbrev_len=4.0)
+            countries.append(n)
+            break
+
+    # Add a subunit for Tuvalu based on Kiribati (the island it used to be
+    # part of, as the Ellice Islands).
+    for c in countries:
+        if c.subunit == "Kiribati":
+            n = c._replace(bbox=(176.7, -12.7, 180.0, -5.4),
+                           sovereignt="Tuvalu",
+                           sov_a3="TUV",
+                           admin="Tuvalu",
+                           adm0_a3="TUV",
+                           geounit="Tuvalu",
+                           gu_a3="TUV",
+                           subunit="Tuvalu",
+                           su_a3="TUV",
+                           name="Tuvalu",
+                           name_long="Tuvalu",
+                           brk_a3="TUV",
+                           brk_name="Tuvalu",
+                           abbrev="Tuvalu",
+                           postal="TV",
+                           formal_en="Tuvalu",
+                           name_sort="Tuvalu",
+                           pop_est=10837.0,
+                           gdp_md_est=3400.0,
+                           lastcensus=2012.0,
+                           iso_a2="TV",
+                           iso_a3="TUV",
+                           iso_n3="789",
+                           un_a3="789",
+                           wb_a2="TV",
+                           wb_a3="TUV",
+                           adm0_a3_is="TUV",
+                           adm0_a3_us="TUV",
+                           name_len=6.0,
+                           long_len=6.0,
+                           abbrev_len=6.0)
+            countries.append(n)
+            break
+
+    # Add a subunit for the Archipelago of San Andrés, Providencia and
+    # Santa Catalina, based on Colombia. The achipelago has (as far as
+    # I can tell) no international status beyond "department of Colombia";
+    # no ISO code of its own or anything.
+    for c in countries:
+        if c.subunit == "Colombia":
+            n = c._replace(bbox=(-82.39, 11.16, -79.60, 15.33),
+                           pop_est=75167,
+                           formal_en=("Department of San Andrés"
+                                      + " and Providencia"))
+            countries.append(n)
+            break
+
+    # Add a subunit for Gibraltar, based on the British Virgin Islands
+    # (another similarly-populated "overseas territory" of the UK).
+    for c in countries:
+        if c.subunit == "British Virgin Islands":
+            n = c._replace(bbox=(-5.368, 36.108618, -5.336, 36.155),
+                           pop_est=30001,
+                           admin="Gibraltar",
+                           adm0_a3="GIB",
+                           geounit="Gibraltar",
+                           gu_a3="GIB",
+                           subunit="Gibraltar",
+                           su_a3="GIB",
+                           name="Gibraltar",
+                           name_long="Gibraltar",
+                           brk_a3="GIB",
+                           brk_name="Gibraltar",
+                           abbrev="Gibraltar",
+                           postal="GI",
+                           formal_en="Gibraltar",
+                           name_sort="Gibraltar",
+                           gdp_md_est=45834,
+                           iso_a2="GI",
+                           iso_a3="GIB",
+                           iso_n3="292",
+                           un_a3="292",
+                           adm0_a3_is="GIB",
+                           adm0_a3_us="GIB",
+                           continent="Europe",
+                           region_un="Europe",
+                           subregion="Southern Europe",
+                           region_wb="Europe & Central Asia",
+                           name_len=9.0,
+                           long_len=9.0,
+                           abbrev_len=9.0),
+            countries.append(n)
+            break
+
+
+adjust_countries()
