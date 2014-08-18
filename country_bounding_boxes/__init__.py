@@ -178,20 +178,20 @@ def show_all_bounding_boxes():
 # Discrepancies / missing units from the naturalearth data set
 def adjust_countries():
 
-    # Adjust Madeira bounding box to include to the island of Porto Santo
-    # by adding 1 degree to edges.
-    for (i, c) in enumerate(countries):
-        if c.gu_a3 == "PMD":
-            (x1, y1, x2, y2) = c.bbox
-            countries[i] = c._replace(bbox=(x1 - 1, y1 - 1, x2 + 1, y2 + 2))
-            break
+    new_subunits = []
 
-    # Add a subunit to Italy for the Pelagie Islands based on Pantelleria
-    # (an adjacent island with similar relationship to the Italian
-    # mainland). The Pelagie Islands are administered by the province of
-    # Agrigento (AG).
-    for c in countries:
-        if c.subunit == "Pantelleria":
+    for (i, c) in enumerate(countries):
+
+        # Adjust Madeira bounding box to include to the island of Porto Santo
+        # by adding 1 degree to edges.
+        if c.gu_a3 == "PMD":
+            countries[i] = c._replace(bbox=(-17.3, 32.4, -16.25, 33.15))
+
+        # Add a subunit to Italy for the Pelagie Islands based on Pantelleria
+        # (an adjacent island with similar relationship to the Italian
+        # mainland). The Pelagie Islands are administered by the province of
+        # Agrigento (AG).
+        elif c.subunit == "Pantelleria":
             n = c._replace(bbox=(12.315, 35.487, 12.893, 35.885),
                            subunit="Pelagie Islands",
                            name="Pelagie Islands",
@@ -199,7 +199,7 @@ def adjust_countries():
                            brk_name="Pelagie Islands",
                            su_a3="IAG",
                            brk_a3="IAG",
-                           Abbrev="Pel.",
+                           abbrev="Pel.",
                            postal="",   # No idea what to put for 'postal'
                            pop_est=6066.0,
                            gdp_md_est=-99.0,
@@ -207,13 +207,11 @@ def adjust_countries():
                            name_len=15.0,
                            long_len=15.0,
                            abbrev_len=4.0)
-            countries.append(n)
-            break
+            new_subunits.append(n)
 
-    # Add a subunit for Tuvalu based on Kiribati (the island it used to be
-    # part of, as the Ellice Islands).
-    for c in countries:
-        if c.subunit == "Kiribati":
+        # Add a subunit for Tuvalu based on Kiribati (the island it used to be
+        # part of, as the Ellice Islands).
+        elif c.subunit == "Kiribati":
             n = c._replace(bbox=(176.7, -12.7, 180.0, -5.4),
                            sovereignt="Tuvalu",
                            sov_a3="TUV",
@@ -245,26 +243,22 @@ def adjust_countries():
                            name_len=6.0,
                            long_len=6.0,
                            abbrev_len=6.0)
-            countries.append(n)
-            break
+            new_subunits.append(n)
 
-    # Add a subunit for the Archipelago of San Andrés, Providencia and
-    # Santa Catalina, based on Colombia. The achipelago has (as far as
-    # I can tell) no international status beyond "department of Colombia";
-    # no ISO code of its own or anything.
-    for c in countries:
-        if c.subunit == "Colombia":
+        # Add a subunit for the Archipelago of San Andrés, Providencia and
+        # Santa Catalina, based on Colombia. The achipelago has (as far as
+        # I can tell) no international status beyond "department of Colombia";
+        # no ISO code of its own or anything.
+        elif c.subunit == "Colombia":
             n = c._replace(bbox=(-82.39, 11.16, -79.60, 15.33),
                            pop_est=75167,
                            formal_en=("Department of San Andrés"
                                       + " and Providencia"))
-            countries.append(n)
-            break
+            new_subunits.append(n)
 
-    # Add a subunit for Gibraltar, based on the British Virgin Islands
-    # (another similarly-populated "overseas territory" of the UK).
-    for c in countries:
-        if c.subunit == "British Virgin Islands":
+        # Add a subunit for Gibraltar, based on the British Virgin Islands
+        # (another similarly-populated "overseas territory" of the UK).
+        elif c.subunit == "British Virgin Islands":
             n = c._replace(bbox=(-5.368, 36.108618, -5.336, 36.155),
                            pop_est=30001,
                            admin="Gibraltar",
@@ -294,9 +288,10 @@ def adjust_countries():
                            region_wb="Europe & Central Asia",
                            name_len=9.0,
                            long_len=9.0,
-                           abbrev_len=9.0),
-            countries.append(n)
-            break
+                           abbrev_len=9.0)
+            new_subunits.append(n)
+
+    countries.extend(new_subunits)
 
 
 adjust_countries()

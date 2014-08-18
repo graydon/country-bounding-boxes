@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='country-bounding-boxes',
-    version='0.2.1',
+    version='0.2.2',
     description='Library of bounding boxes of countries (and associated data)',
     long_description=open('README.rst').read(),
     author='Graydon Hoare',

@@ -27,7 +27,8 @@ class TestCountries(TestCase):
         self.assertEqual(code_to_names('ZWE'), ['Zimbabwe'])
 
     def test_codes_case(self):
-        italy = ['Italy', 'Pantelleria', 'Sardinia', 'Sicily']
+        italy = ['Italy', 'Pantelleria', 'Pelagie Islands',
+                 'Sardinia', 'Sicily']
         self.assertEqual(code_to_names('it'), italy)
         self.assertEqual(code_to_names('iTa'), italy)
 
