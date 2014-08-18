@@ -120,7 +120,7 @@ def country_subunits_by_iso_code(code):
     some of which are smaller components thereof; all have a .bbox field
     indicating their (lon1, lat1, lon2, lat2) bounding box.
     """
-    if not isinstance(code, str):
+    if not isinstance(code, basestring):
         return iter([])
     _ensure_caches_populated()
     code = code.upper()
