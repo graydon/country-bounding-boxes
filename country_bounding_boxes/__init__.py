@@ -4,8 +4,13 @@
 
 import iso3166
 import json
+import sys
 from country_bounding_boxes.generated import countries
 
+if sys.version_info > (3, ):
+    string_types = str
+else:
+    string_types = basestring
 
 # The naturalearth dataset we're using contains "subunits" of a variety of
 # forms; Some are "full sized" countries, some are historically or
@@ -120,7 +125,7 @@ def country_subunits_by_iso_code(code):
     some of which are smaller components thereof; all have a .bbox field
     indicating their (lon1, lat1, lon2, lat2) bounding box.
     """
-    if not isinstance(code, basestring):
+    if not isinstance(code, string_types):
         return iter([])
     _ensure_caches_populated()
     code = code.upper()
@@ -172,7 +177,7 @@ def show_all_bounding_boxes():
     fc = dict(type="FeatureCollection",
               features=fs)
 
-    print json.dumps(fc, indent=True)
+    print(json.dumps(fc, indent=True))
 
 
 # Discrepancies / missing units from the naturalearth data set
